@@ -1,0 +1,18 @@
+{
+  "build": {
+    "fooddeliveryappbuild": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "fooddeliveryappbuild2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "fooddeliveryappbuild3": {
+      "developmentClient": true
+    },
+    "production": {}
+  }
+}
