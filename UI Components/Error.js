@@ -1,35 +1,47 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 const Error = ({ ErrorVisible, setErrorVisible, message }) => {
-
-
-
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
         visible={ErrorVisible}
-        onRequestClose={()=>{ 
-          setErrorVisible(false)
+        onRequestClose={() => {
+          setErrorVisible(false);
         }}
-
       >
         <View style={styles.centeredView}>
-
           <View style={styles.modalView}>
-            <Text style={{ width: "100%", textAlign: "center", marginBottom: 50, fontSize: 15, fontWeight: "600", color: "rgb(79, 3, 3)" }}>{message}</Text>
-             <TouchableOpacity style={styles.ok} onPress={()=>setErrorVisible(false)}> 
-             <Text style={{textAlign: "center", color: "white"}}>OK</Text>
-             </TouchableOpacity>
+            <Text
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginBottom: 50,
+                fontSize: 15,
+                fontWeight: "600",
+                color: "rgb(79, 3, 3)",
+              }}
+            >
+              {message}
+            </Text>
+            <TouchableOpacity
+              style={styles.ok}
+              onPress={() => setErrorVisible(false)}
+            >
+              <Text style={{ textAlign: "center", color: "white" }}>OK</Text>
+            </TouchableOpacity>
           </View>
         </View>
-
       </Modal>
-
-
     </View>
   );
 };
@@ -39,12 +51,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
     justifyContent: "center",
     overflow: "hidden",
     margin: 20,
@@ -57,16 +69,16 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -77,12 +89,12 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }, 
+    textAlign: "center",
+  },
   ok: {
     marginTop: 20,
     width: 90,
@@ -90,8 +102,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 17,
     fontWeight: "600",
-    backgroundColor: "rgb(110, 18, 18)"
-  }
+    backgroundColor: "rgb(110, 18, 18)",
+  },
 });
 
 export default Error;
