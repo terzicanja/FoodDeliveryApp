@@ -19,6 +19,7 @@ import {
 } from "@firebase/firestore";
 import { auth } from "../../config/firebase-config";
 import config from "../../config/config.json";
+import { RadioButton } from "react-native-paper";
 
 const MenuItem = ({
   item,
@@ -36,6 +37,7 @@ const MenuItem = ({
 
   const [ViewFoodDetails, setViewFoodDetails] = useState(100);
   const [SelectedFood, setSelectedFood] = useState({ portion: "", price: 0 });
+  const [option, setOption] = useState();
 
   const [imgURL, setimgURL] = useState("");
   const getImageFromStorage = async () => {
@@ -58,15 +60,15 @@ const MenuItem = ({
 
   const handleAddToOrders = async () => {
     try {
-      if (SelectedFood.price != 0) {
+      if (option.price != 0) {
         setOrders_container((curr) => {
           return [
             ...curr,
             {
               food_id: food_id,
               food_name: food_data.food.food_name,
-              portion: SelectedFood.portion,
-              price: SelectedFood.price,
+              portion: option.portion,
+              price: option.price,
             },
           ];
         });
@@ -74,21 +76,22 @@ const MenuItem = ({
     } catch (error) {}
   };
 
+  console.log("prices", prices);
+
   let menuitems = [
-    prices?.Mala != null || prices.Mala == ""
-      ? { label: "Mala porcija", value: prices?.Mala }
+    prices?.Mala ? { portion: "Mala porcija", price: prices?.Mala } : {},
+    prices?.Srednja
+      ? { portion: "Srednja porcija", price: prices?.Srednja }
       : {},
-    prices?.Srednja != null || prices.Srednja != ""
-      ? { label: "Srednja porcija", value: prices?.Srednja }
-      : {},
-    prices?.Velika != null || prices.Velika != ""
-      ? { label: "Velika porcija", value: prices?.Velika }
-      : {},
+    prices?.Velika ? { portion: "Velika porcija", price: prices?.Velika } : {},
   ];
+
+  console.log("menuitems", menuitems);
+  console.log("optionnn", option);
 
   return (
     <Fragment>
-      <View style={[styles.card, { height: ViewFoodDetails }]}>
+      <View style={[styles.card, { height: 200 }]}>
         <View
           style={{
             textAlign: "center",
@@ -113,7 +116,27 @@ const MenuItem = ({
         </View>
 
         <View style={{ textAlign: "center", marginRight: 2, marginTop: 27 }}>
-          <RNPickerSelect
+          {/* <RadioButton
+            data={menuitems}
+            onSelect={(value) => setOption(value)}
+          /> */}
+          {menuitems.map((item, index) => {
+            return (
+              <RadioButton.Item
+                key={index}
+                label={item.portion}
+                value={item.portion}
+                status={
+                  option && option.portion === item.portion
+                    ? "checked"
+                    : "unchecked"
+                }
+                onPress={() => setOption(item)}
+              />
+            );
+          })}
+          {/* <Text> Your option: {option.label}</Text> */}
+          {/* <RNPickerSelect
             onValueChange={(value, label) => {
               switch (label) {
                 case 0:
@@ -154,7 +177,7 @@ const MenuItem = ({
             style={pickerSelectStyles}
             useNativeAndroidPickerStyle={false}
             items={menuitems}
-          />
+          /> */}
         </View>
 
         <View style={{ textAlign: "center", marginTop: 40 }}>
@@ -168,7 +191,7 @@ const MenuItem = ({
             }}
           >
             {" "}
-            {SelectedFood.price + currency}{" "}
+            {option && option.price + currency}{" "}
           </Text>
         </View>
 

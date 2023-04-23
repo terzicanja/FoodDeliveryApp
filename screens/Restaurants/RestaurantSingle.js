@@ -40,14 +40,24 @@ const RestaurantSingle = ({ route, navigation }) => {
       })
     );
 
+    // menu = objArray.map((item) => {
+    //   console.log("item", item);
+    //   return (
+    //     <div>
+    //       <p>{restaurant_name}</p>
+    //     </div>
+    //   );
+    // });
     menu = objArray.map((item) => (
-      <MenuItem
-        setOrders_container={setOrders_container}
-        restaurant_name={restaurant_name}
-        key={Math.random()}
-        item={item}
-        restaurant_id={id}
-      />
+      <div>
+        <MenuItem
+          setOrders_container={setOrders_container}
+          restaurant_name={restaurant_name}
+          key={Math.random()}
+          item={item}
+          restaurant_id={id}
+        />
+      </div>
     ));
   }
 
