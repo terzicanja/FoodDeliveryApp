@@ -1,9 +1,5 @@
-{ 
-"prices": { 
-    "price_currency": "€"
-}
-
-
-
-
+{
+  "prices": {
+    "price_currency": "RSD"
+  }
 }

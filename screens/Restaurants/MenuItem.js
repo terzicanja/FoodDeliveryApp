@@ -35,9 +35,29 @@ const MenuItem = ({
 
   const db = getFirestore();
 
+  console.log("prices", prices);
+
+  let menuitems = [
+    prices?.Mala ? { portion: "Mala porcija", price: prices?.Mala } : null,
+    prices?.Srednja
+      ? { portion: "Srednja porcija", price: prices?.Srednja }
+      : {},
+    prices?.Velika ? { portion: "Velika porcija", price: prices?.Velika } : {},
+  ];
+
+  const menuItemPortions = Object.entries(prices)
+    .map(([name, price]) => {
+      return price
+        ? {
+            portion: `${name} porcija`,
+            price: price,
+          }
+        : null;
+    })
+    .filter((item) => (item ? true : false));
+
   const [ViewFoodDetails, setViewFoodDetails] = useState(100);
-  const [SelectedFood, setSelectedFood] = useState({ portion: "", price: 0 });
-  const [option, setOption] = useState();
+  const [option, setOption] = useState(menuItemPortions[0]);
 
   const [imgURL, setimgURL] = useState("");
   const getImageFromStorage = async () => {
@@ -76,22 +96,9 @@ const MenuItem = ({
     } catch (error) {}
   };
 
-  console.log("prices", prices);
-
-  let menuitems = [
-    prices?.Mala ? { portion: "Mala porcija", price: prices?.Mala } : {},
-    prices?.Srednja
-      ? { portion: "Srednja porcija", price: prices?.Srednja }
-      : {},
-    prices?.Velika ? { portion: "Velika porcija", price: prices?.Velika } : {},
-  ];
-
-  console.log("menuitems", menuitems);
-  console.log("optionnn", option);
-
   return (
     <Fragment>
-      <View style={[styles.card, { height: 200 }]}>
+      <View style={[styles.card, { padding: 15, flexBasis: "auto" }]}>
         <View
           style={{
             textAlign: "center",
@@ -110,97 +117,40 @@ const MenuItem = ({
               style={{ width: 70, height: 70, borderRadius: 10 }}
             />
           </TouchableOpacity>
-          <Text style={{ color: "white", textAlign: "center" }}>
+        </View>
+
+        <View style={{ textAlign: "center", marginRight: 2 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              fontWeight: "bold",
+              textAlign: "left",
+            }}
+          >
             {item?.food?.food_name}
           </Text>
-        </View>
-
-        <View style={{ textAlign: "center", marginRight: 2, marginTop: 27 }}>
-          {/* <RadioButton
-            data={menuitems}
-            onSelect={(value) => setOption(value)}
-          /> */}
-          {menuitems.map((item, index) => {
-            return (
-              <RadioButton.Item
-                key={index}
-                label={item.portion}
-                value={item.portion}
-                status={
-                  option && option.portion === item.portion
-                    ? "checked"
-                    : "unchecked"
-                }
-                onPress={() => setOption(item)}
-              />
-            );
-          })}
-          {/* <Text> Your option: {option.label}</Text> */}
-          {/* <RNPickerSelect
-            onValueChange={(value, label) => {
-              switch (label) {
-                case 0:
-                  break;
-                case 1:
-                  value != 0
-                    ? setSelectedFood(() => {
-                        return { portion: "Mala", price: value };
-                      })
-                    : setSelectedFood(() => {
-                        return { portion: "", price: 0 };
-                      });
-                  break;
-                case 2:
-                  value != 0
-                    ? setSelectedFood(() => {
-                        return { portion: "Srednja", price: value };
-                      })
-                    : setSelectedFood(() => {
-                        return { portion: "", price: 0 };
-                      });
-                  break;
-                case 3:
-                  value != 0
-                    ? setSelectedFood(() => {
-                        return { portion: "Velika", price: value };
-                      })
-                    : setSelectedFood(() => {
-                        return { portion: "", price: 0 };
-                      });
-                  break;
-
-                default:
-                  break;
-              }
-            }}
-            placeholder={{ label: "Odaberi porciju..", value: 0 }}
-            style={pickerSelectStyles}
-            useNativeAndroidPickerStyle={false}
-            items={menuitems}
-          /> */}
-        </View>
-
-        <View style={{ textAlign: "center", marginTop: 40 }}>
+          {food_data.food.food_description && (
+            <Text style={{ color: "white" }}>
+              Opis jela: {food_data.food.food_description}
+            </Text>
+          )}
           <Text
             style={{
               width: 50,
               marginBottom: "auto",
               marginTop: "auto",
               color: "white",
-              marginLeft: 10,
+              fontWeight: "600",
             }}
           >
-            {" "}
             {option && option.price + currency}{" "}
           </Text>
-        </View>
-
-        <View style={{ textAlign: "center", marginTop: 29 }}>
           <TouchableOpacity
             onPress={handleAddToOrders}
             style={{
               marginBottom: "auto",
-              marginTop: "auto",
+              marginTop: 10,
               backgroundColor: "rgb(255, 211, 99)",
               borderRadius: 25,
               padding: 12,
@@ -210,13 +160,28 @@ const MenuItem = ({
           </TouchableOpacity>
         </View>
 
-        {food_data.food.food_description != null &&
-        food_data.food.food_description != "" ? (
-          <Text style={{ color: "white" }}>
-            {" "}
-            Opis jela: {food_data.food.food_description}
-          </Text>
-        ) : null}
+        <View style={{ textAlign: "center", paddingLeft: 20 }}>
+          {menuItemPortions.map((item, index) => {
+            return (
+              item && (
+                <RadioButton.Item
+                  style={{ fontSize: 10, padding: 0 }}
+                  labelStyle={{ color: "white", fontSize: 12 }}
+                  color="white"
+                  key={index}
+                  label={item.portion}
+                  value={item.portion}
+                  status={
+                    option && option.portion === item.portion
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={() => setOption(item)}
+                />
+              )
+            );
+          })}
+        </View>
       </View>
     </Fragment>
   );
@@ -233,7 +198,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "#694fad",
     marginBottom: 10,
-    height: 120,
   },
   item: {
     width: "50%",
