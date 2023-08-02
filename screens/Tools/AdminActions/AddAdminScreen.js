@@ -20,7 +20,7 @@ import ErrorComponent from "../../../UI Components/Error";
 import Success from "../../../UI Components/Success";
 
 const AddAdminScreen = () => {
-  const [SuccessVisible, setSuccessVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
   const [ErrorVisible, setErrorVisible] = useState(false);
 
@@ -92,7 +92,7 @@ const AddAdminScreen = () => {
         />
         <Success
           setSuccessVisible={setSuccessVisible}
-          SuccessVisible={SuccessVisible}
+          successVisible={successVisible}
           message="Admin added successfully!"
         />
       </ScrollView>

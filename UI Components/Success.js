@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Success = ({ SuccessVisible, setSuccessVisible, message }) => {
+const Success = ({ successVisible, setSuccessVisible, message }) => {
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={SuccessVisible}
+        visible={successVisible}
         onRequestClose={() => {
           setSuccessVisible(false);
         }}

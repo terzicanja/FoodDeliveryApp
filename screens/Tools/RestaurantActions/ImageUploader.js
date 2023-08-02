@@ -16,7 +16,8 @@ import { getDatabase, ref, onValue } from "firebase/database";
 
 const ImageUploader = ({ setImageuri }) => {
   const [image, setImage] = useState(null);
-  const [picked, setpicked] = useState(false);
+  const [picked, setPicked] = useState(false);
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -28,7 +29,7 @@ const ImageUploader = ({ setImageuri }) => {
     if (!result.cancelled) {
       setImage(result.uri);
       setImageuri(result.uri);
-      setpicked(true);
+      setPicked(true);
     }
   };
 

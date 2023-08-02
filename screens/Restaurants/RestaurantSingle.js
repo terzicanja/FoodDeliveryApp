@@ -3,9 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
-  Animated,
   TouchableOpacity,
 } from "react-native";
 import MenuItem from "./MenuItem";
@@ -18,7 +16,6 @@ import {
   getDoc,
   doc,
 } from "@firebase/firestore";
-import { async } from "@firebase/util";
 import { auth } from "../../config/firebase-config";
 
 const RestaurantSingle = ({ route, navigation }) => {

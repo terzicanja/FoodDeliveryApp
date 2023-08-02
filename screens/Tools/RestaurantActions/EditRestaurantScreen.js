@@ -9,14 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import {
-  doc,
-  updateDoc,
-  collection,
-  query,
-  where,
-  getFirestore,
-} from "@firebase/firestore";
+import { doc, updateDoc, getFirestore } from "@firebase/firestore";
 import MenuItemDelete from "./MenuItemDelete";
 import ErrorComponent from "../../../UI Components/Error";
 import Success from "../../../UI Components/Success";
@@ -28,7 +21,7 @@ const EditRestaurantScreen = ({ navigation, route }) => {
   const [imgURL, setimgURL] = useState("");
   const [update, setupdate] = useState(false);
 
-  const [SuccessVisible, setSuccessVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
   const [ErrorVisible, setErrorVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
 
@@ -48,7 +41,7 @@ const EditRestaurantScreen = ({ navigation, route }) => {
     if (imgURL == "") getImageFromStorage();
   }, [restaurant_data]);
 
-  const [restaurant_info, setrestaurant_info] = useState({
+  const [restaurantInfo, setRestaurantInfo] = useState({
     restaurant_name: restaurant_data.restaurant_name,
     restaurant_description: restaurant_data.restaurant_description,
     restaurant_adress: restaurant_data.restaurant_adress,
@@ -81,19 +74,19 @@ const EditRestaurantScreen = ({ navigation, route }) => {
   const UpdateRestaurantInfo = async () => {
     try {
       if (
-        !restaurant_info.restaurant_name.trim() ||
-        !restaurant_info.restaurant_adress.trim() ||
-        !restaurant_info.restaurant_description.trim()
+        !restaurantInfo.restaurant_name.trim() ||
+        !restaurantInfo.restaurant_adress.trim() ||
+        !restaurantInfo.restaurant_description.trim()
       ) {
-        throw Error("a input field is empty! you need to fill all of them!");
+        throw Error("An input field is empty! You need to fill all of them!");
       }
       const resp = await updateDoc(restaurantRef, {
-        restaurant_name: restaurant_info.restaurant_name,
-        restaurant_adress: restaurant_info.restaurant_adress,
-        restaurant_description: restaurant_info.restaurant_description,
+        restaurant_name: restaurantInfo.restaurant_name,
+        restaurant_adress: restaurantInfo.restaurant_adress,
+        restaurant_description: restaurantInfo.restaurant_description,
       });
 
-      uploadImage(imgURL, restaurant_info.restaurant_name, restaurant_data.id);
+      uploadImage(imgURL, restaurantInfo.restaurant_name, restaurant_data.id);
       setSuccessVisible(true);
     } catch (error) {
       seterrorMessage(error.message);
@@ -145,18 +138,18 @@ const EditRestaurantScreen = ({ navigation, route }) => {
           </TouchableOpacity>
           <TextInput
             style={styles["input-field"]}
-            value={restaurant_info.restaurant_name}
+            value={restaurantInfo.restaurant_name}
             onChangeText={(value) =>
-              setrestaurant_info((curr) => {
+              setRestaurantInfo((curr) => {
                 return { ...curr, restaurant_name: value };
               })
             }
           />
           <TextInput
             style={styles["input-field"]}
-            value={restaurant_info.restaurant_adress}
+            value={restaurantInfo.restaurant_adress}
             onChangeText={(value) =>
-              setrestaurant_info((curr) => {
+              setRestaurantInfo((curr) => {
                 return { ...curr, restaurant_adress: value };
               })
             }
@@ -165,9 +158,9 @@ const EditRestaurantScreen = ({ navigation, route }) => {
             style={[styles["input-field"], { height: 70 }]}
             textBreakStrategy={"highQuality"}
             multiline={true}
-            value={restaurant_info.restaurant_description}
+            value={restaurantInfo.restaurant_description}
             onChangeText={(value) =>
-              setrestaurant_info((curr) => {
+              setRestaurantInfo((curr) => {
                 return { ...curr, restaurant_description: value };
               })
             }
@@ -193,7 +186,7 @@ const EditRestaurantScreen = ({ navigation, route }) => {
 
         <Success
           setSuccessVisible={setSuccessVisible}
-          SuccessVisible={SuccessVisible}
+          successVisible={successVisible}
           message="Restaurant info updated successfully!"
         />
         <ErrorComponent

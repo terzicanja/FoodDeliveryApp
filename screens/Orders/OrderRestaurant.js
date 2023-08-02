@@ -1,14 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import {
-  getFirestore,
-  setDoc,
-  collection,
-  doc,
-  getDoc,
-  deleteDoc,
-} from "@firebase/firestore";
+import { getFirestore, setDoc, doc, deleteDoc } from "@firebase/firestore";
 
 const OrderRestaurant = ({ order_data, setModalVisible, navigation }) => {
   const db = getFirestore();

@@ -1,22 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
-import {
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
-import { useFirestoreQuery } from "../Custom Functions/Hooks";
-import {
-  where,
-  query,
-  collection,
-  getFirestore,
-  orderBy,
-  doc,
-  getDoc,
-} from "@firebase/firestore";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+
 import Order from "./Order";
 
 const OrderGroup = ({ route }) => {

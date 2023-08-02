@@ -25,7 +25,7 @@ import Success from "../../../UI Components/Success";
 
 const AddRestaurantScreen = ({ navigation }) => {
   const [ErrorVisible, setErrorVisible] = useState(false);
-  const [SuccessVisible, setSuccessVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
 
   const db = getFirestore();
@@ -180,7 +180,7 @@ const AddRestaurantScreen = ({ navigation }) => {
           />
           <Success
             setSuccessVisible={setSuccessVisible}
-            SuccessVisible={SuccessVisible}
+            successVisible={successVisible}
             message="Restaurant added successfully!"
           />
         </ScrollView>

@@ -8,15 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import {
-  getFirestore,
-  setDoc,
-  collection,
-  doc,
-  getDoc,
-  addDoc,
-  arrayRemove,
-} from "@firebase/firestore";
+import { getFirestore } from "@firebase/firestore";
 import config from "../../../config/config.json";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -30,7 +22,7 @@ const MenuItemDelete = ({ item, restaurant_id, deleteById }) => {
 
   const db = getFirestore();
 
-  const [ViewFoodDetails, setViewFoodDetails] = useState(100);
+  // const [ViewFoodDetails, setViewFoodDetails] = useState(100);
   const [SelectedFood, setSelectedFood] = useState({ portion: "", price: 0 });
 
   const [imgURL, setimgURL] = useState("");

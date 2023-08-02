@@ -1,22 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import {
-  getFirestore,
-  setDoc,
-  collection,
-  doc,
-  getDoc,
-  addDoc,
-} from "@firebase/firestore";
+import { getFirestore } from "@firebase/firestore";
 import { auth } from "../../config/firebase-config";
 import config from "../../config/config.json";
 import { RadioButton } from "react-native-paper";

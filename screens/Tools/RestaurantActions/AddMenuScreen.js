@@ -42,7 +42,7 @@ const AddMenuScreen = ({ navigation, route }) => {
 
   const [Imageuri, setImageuri] = useState(null);
 
-  const [SuccessVisible, setSuccessVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
   const [ErrorVisible, setErrorVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
 
@@ -178,7 +178,7 @@ const AddMenuScreen = ({ navigation, route }) => {
           </TouchableOpacity>
           <Success
             setSuccessVisible={setSuccessVisible}
-            SuccessVisible={SuccessVisible}
+            successVisible={successVisible}
             message="item successfully added to Menu!"
           />
           <ErrorComponent

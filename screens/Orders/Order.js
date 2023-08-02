@@ -1,12 +1,5 @@
-import React, { Fragment, useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
+import React, { Fragment, useState } from "react";
+import { Text, View, StyleSheet, Image, Platform } from "react-native";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const Order = ({ food_data, restaurant_id }) => {

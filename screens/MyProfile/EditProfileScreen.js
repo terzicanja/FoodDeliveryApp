@@ -26,7 +26,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const EditProfileScreen = ({ navigation, route }) => {
   const user_data = route.params.user;
 
-  const [SuccessVisible, setSuccessVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
   const [ErrorVisible, setErrorVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
 
@@ -66,11 +66,13 @@ const EditProfileScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.form}>
-        <Success
-          setSuccessVisible={setSuccessVisible}
-          SuccessVisible={SuccessVisible}
-          message="Profile info updated successfully!"
-        />
+        {successVisible && (
+          <Success
+            setSuccessVisible={setSuccessVisible}
+            successVisible={successVisible}
+            message="Profile info updated successfully!"
+          />
+        )}
 
         <View style={styles["input-card"]}>
           <TextInput
@@ -146,7 +148,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     width: "100%",
     height: "85%",
-    top: "15%",
     paddingHorizontal: 30,
     paddingTop: 40,
   },

@@ -2,14 +2,7 @@ import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import Restaurant from "./Restaurant";
 import { getFirestore } from "@firebase/firestore";
-import {
-  collection,
-  getDocs,
-  doc,
-  query,
-  getDoc,
-  where,
-} from "@firebase/firestore";
+import { collection, query, where } from "@firebase/firestore";
 import { useFirestoreQuery } from "../Custom Functions/Hooks";
 import { auth } from "../../config/firebase-config";
 

@@ -1,20 +1,7 @@
 import React, { Fragment, useState, useRef } from "react";
-import {
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { useFirestoreQuery } from "../Custom Functions/Hooks";
-import {
-  where,
-  query,
-  collection,
-  getFirestore,
-  orderBy,
-} from "@firebase/firestore";
+import { where, query, collection, getFirestore } from "@firebase/firestore";
 import { auth } from "../../config/firebase-config";
 import Rating from "./Rating";
 import OrderRestaurant from "./OrderRestaurant";

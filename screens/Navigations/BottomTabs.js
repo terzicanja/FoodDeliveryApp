@@ -4,15 +4,7 @@ import MyProfileStack from "../MyProfile/MyProfileStack";
 import RestaurantsScreen from "../Restaurants/RestaurantsScreen";
 import OrdersStack from "../Orders/OrdersStack";
 import Tools from "../Tools/Tools";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-  doc,
-  getDoc,
-} from "@firebase/firestore";
+import { getFirestore, doc, getDoc } from "@firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faUser,
