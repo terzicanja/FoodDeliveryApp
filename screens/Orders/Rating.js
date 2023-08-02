@@ -1,25 +1,8 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import {
-  getFirestore,
-  setDoc,
-  collection,
-  doc,
-  getDoc,
-  addDoc,
-  serverTimestamp,
-  updateDoc,
-  query,
-} from "@firebase/firestore";
+import { getFirestore, doc, updateDoc } from "@firebase/firestore";
 
 const Rating = ({ modalVisible, setModalVisible }) => {
   const db = getFirestore();
