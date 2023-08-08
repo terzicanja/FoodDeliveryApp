@@ -16,6 +16,7 @@ const OrdersScreen = ({ navigation }) => {
   const OrdersRef = collection(db, "Orders");
   const q = query(OrdersRef, where("user_id", "==", auth.currentUser.uid));
   let orders = useFirestoreQuery(q);
+
   let orders_output = orders.map((order) => (
     <OrderRestaurant
       navigation={navigation}
@@ -29,7 +30,11 @@ const OrdersScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles["restaurant_card"]}>
         <Rating setModalVisible={setModalVisible} modalVisible={modalVisible} />
-        {orders_output}
+        {orders.length === 0 ? (
+          <Text style={styles.noOrders}>No orders yet</Text>
+        ) : (
+          orders_output
+        )}
       </ScrollView>
     </View>
   );
@@ -46,5 +51,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(255, 211, 99)",
     height: "100%",
     width: "100%",
+  },
+  noOrders: {
+    fontWeight: 600,
+    fontSize: "21px",
+    alignSelf: "center",
   },
 });

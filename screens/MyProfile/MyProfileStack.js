@@ -24,11 +24,12 @@ const OrdersStack = () => {
         <Stack.Screen
           name="OrdersHistoryScreen"
           component={OrdersHistoryScreen}
+          options={{ title: "Order history" }}
         />
         <Stack.Screen
           name="EditProfileScreen"
-          options={{ title: "Edit Profile" }}
           component={EditProfileScreen}
+          options={{ title: "Edit Profile" }}
         />
       </Stack.Navigator>
     </Fragment>

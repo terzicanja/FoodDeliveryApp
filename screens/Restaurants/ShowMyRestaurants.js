@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import Restaurant from "./Restaurant";
 import { getFirestore } from "@firebase/firestore";
 import { collection, query, where } from "@firebase/firestore";
@@ -28,7 +28,16 @@ const ShowMyRestaurants = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollview} scrollEventThrottle={90}>
+      <ScrollView
+        style={styles.scrollview}
+        contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+        scrollEventThrottle={90}
+      >
+        {restaurants_arry.length === 0 ? (
+          <Text style={styles.noRestaurants}>No restaurants</Text>
+        ) : (
+          restaurants_arry
+        )}
         {restaurants_arry}
       </ScrollView>
     </View>
@@ -49,5 +58,10 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "90%",
     marginHorizontal: "5%",
+  },
+  noRestaurants: {
+    fontWeight: 600,
+    fontSize: "21px",
+    alignSelf: "center",
   },
 });

@@ -1,27 +1,18 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   ScrollView,
-  Image,
   TouchableOpacity,
 } from "react-native";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import {
-  doc,
-  updateDoc,
-  collection,
-  query,
-  where,
-  getFirestore,
-  getDoc,
-} from "@firebase/firestore";
+import { doc, updateDoc, getFirestore } from "@firebase/firestore";
 import { auth } from "../../config/firebase-config";
 import Success from "../../UI Components/Success";
 import ErrorComponent from "../../UI Components/Error";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Button } from "react-native-paper";
+import Geolocation from "@react-native-community/geolocation";
 
 const EditProfileScreen = ({ navigation, route }) => {
   const user_data = route.params.user;
@@ -29,6 +20,7 @@ const EditProfileScreen = ({ navigation, route }) => {
   const [successVisible, setSuccessVisible] = useState(false);
   const [ErrorVisible, setErrorVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
+  const [coords, setCoords] = useState({ long: "", lat: "" });
 
   const [user, setuser] = useState({
     first_name: user_data.first_name,
@@ -47,7 +39,7 @@ const EditProfileScreen = ({ navigation, route }) => {
         !user.adress.trim() ||
         !user.phone.trim()
       ) {
-        throw Error("a input field is empty! you need to fill all of them!");
+        throw Error("An input field is empty! You need to fill all of them!");
       }
 
       const resp = await updateDoc(userRef, {
@@ -112,6 +104,7 @@ const EditProfileScreen = ({ navigation, route }) => {
               })
             }
           />
+
           <TouchableOpacity onPress={updateUser} style={styles.button}>
             <Text
               style={{
@@ -129,6 +122,27 @@ const EditProfileScreen = ({ navigation, route }) => {
             setErrorVisible={setErrorVisible}
             message={errorMessage}
           />
+          {coords.lat && (
+            <>
+              <Text>Latitude: {coords.lat}</Text>
+              <Text>Longitude: {coords.long}</Text>
+            </>
+          )}
+
+          <Button
+            onPress={() => {
+              console.log("kliknulaa");
+              Geolocation.getCurrentPosition((info) => {
+                console.log(info);
+                setCoords({
+                  lat: info.coords.latitude,
+                  long: info.coords.longitude,
+                });
+              });
+            }}
+          >
+            Location
+          </Button>
         </View>
       </ScrollView>
     </View>

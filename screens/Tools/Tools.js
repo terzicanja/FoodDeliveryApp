@@ -29,22 +29,24 @@ const Tools = ({ navigation }) => {
         <Stack.Screen
           name="AddAdminScreen"
           component={AddAdminScreen}
-          options={{ headerLeft: () => null, headerShown: false }}
+          options={{ title: "Add admin" }}
         />
         <Stack.Screen
           name="AddRestaurantScreen"
           component={AddRestaurantScreen}
+          options={{ title: "Add restaurant" }}
         />
-        <Stack.Screen name="AddMenuScreen" component={AddMenuScreen} />
+        <Stack.Screen
+          name="AddMenuScreen"
+          component={AddMenuScreen}
+          options={{ title: "Add menu" }}
+        />
         <Stack.Screen
           name="EditRestaurantScreen"
           component={EditRestaurantScreen}
+          options={{ title: "Edit restaurant" }}
         />
-        <Stack.Screen
-          name="ShowMyRestaurants"
-          component={ShowMyRestaurants}
-          options={{ headerLeft: () => null, headerShown: false }}
-        />
+        <Stack.Screen name="ShowMyRestaurants" component={ShowMyRestaurants} />
       </Stack.Navigator>
     </Fragment>
   );

@@ -25,6 +25,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.fooddelivery.app",
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
       "googleServicesFile": "./google-services.json"
     },
     "web": {

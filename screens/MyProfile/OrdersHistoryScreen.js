@@ -38,7 +38,9 @@ const OrdersHistoryScreen = ({ navigation }) => {
                 >
                   Orders History
                 </Text>
-              ) : null}
+              ) : (
+                <Text style={styles.noOrderHistory}>No order history</Text>
+              )}
             </View>
             {orders_output}
           </ScrollView>
@@ -61,5 +63,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(255, 211, 99)",
     height: "100%",
     width: "100%",
+  },
+  noOrderHistory: {
+    fontWeight: 600,
+    fontSize: "21px",
+    alignSelf: "center",
   },
 });
