@@ -42,11 +42,15 @@ const Tools = ({ navigation }) => {
           options={{ title: "Add menu" }}
         />
         <Stack.Screen
+          name="ShowMyRestaurants"
+          component={ShowMyRestaurants}
+          options={{ title: "My restaurants" }}
+        />
+        <Stack.Screen
           name="EditRestaurantScreen"
           component={EditRestaurantScreen}
-          options={{ title: "Edit restaurant" }}
+          options={{ title: "My restaurants" }}
         />
-        <Stack.Screen name="ShowMyRestaurants" component={ShowMyRestaurants} />
       </Stack.Navigator>
     </Fragment>
   );

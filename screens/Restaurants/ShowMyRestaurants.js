@@ -30,7 +30,7 @@ const ShowMyRestaurants = ({ navigation, route }) => {
     <View style={styles.container}>
       <ScrollView
         style={styles.scrollview}
-        contentContainerStyle={{ justifyContent: "center", flex: 1 }}
+        contentContainerStyle={{ justifyContent: "center" }}
         scrollEventThrottle={90}
       >
         {restaurants_arry.length === 0 ? (
@@ -38,7 +38,6 @@ const ShowMyRestaurants = ({ navigation, route }) => {
         ) : (
           restaurants_arry
         )}
-        {restaurants_arry}
       </ScrollView>
     </View>
   );

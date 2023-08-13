@@ -118,6 +118,7 @@ const EditRestaurantScreen = ({ navigation, route }) => {
         key={Math.random()}
         item={item}
         restaurant_id={restaurant_data.id}
+        restaurant_data={restaurant_data}
       />
     ));
   }

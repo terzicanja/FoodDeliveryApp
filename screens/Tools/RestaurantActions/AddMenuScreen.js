@@ -8,18 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import {
-  collection,
-  query,
-  where,
-  doc,
-  getFirestore,
-  getDocs,
-  getDoc,
-  setDoc,
-  addDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getFirestore, getDoc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import ImageUploader from "./ImageUploader";
 import ErrorComponent from "../../../UI Components/Error";
@@ -27,21 +16,36 @@ import Success from "../../../UI Components/Success";
 
 const AddMenuScreen = ({ navigation, route }) => {
   const db = getFirestore();
+  const food_data = route.params.food_data;
   let restaurant_id = route.params.restaurant_data.id;
   const [loading, setloading] = useState(false);
-  const [menu_data, setmenu_data] = useState({
-    food_name: "",
-    food_description: "",
-  });
+  const [menu_data, setmenu_data] = useState(
+    food_data
+      ? {
+          food_name: food_data.food.food_name,
+          food_description: food_data.food.food_description,
+        }
+      : {
+          food_name: "",
+          food_description: "",
+        }
+  );
 
-  const [food_price, setfood_price] = useState({
-    Mala: "",
-    Srednja: "",
-    Velika: "",
-  });
+  const [food_price, setfood_price] = useState(
+    food_data
+      ? {
+          Mala: food_data.food.food_price.Mala,
+          Srednja: food_data.food.food_price.Srednja,
+          Velika: food_data.food.food_price.Velika,
+        }
+      : {
+          Mala: "",
+          Srednja: "",
+          Velika: "",
+        }
+  );
 
   const [Imageuri, setImageuri] = useState(null);
-
   const [successVisible, setSuccessVisible] = useState(false);
   const [ErrorVisible, setErrorVisible] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
@@ -64,7 +68,10 @@ const AddMenuScreen = ({ navigation, route }) => {
     try {
       if (!menu_data.food_name.trim() || !menu_data.food_description.trim())
         throw new Error("some fields are empty, please fill all of them!");
-      if (Imageuri == "" || Imageuri == null || Imageuri == undefined)
+      if (
+        !food_data &&
+        (Imageuri == "" || Imageuri == null || Imageuri == undefined)
+      )
         throw new Error("Please select a image!");
 
       setloading(true);
@@ -72,7 +79,7 @@ const AddMenuScreen = ({ navigation, route }) => {
       const rest = await getDoc(RestaurantRef);
       const restaurant_data = rest.data();
       let menu = {};
-      let food_id = 0;
+      let food_id = food_data ? food_data.id : 0;
       if (
         restaurant_data.restaurant_menu != null &&
         restaurant_data.restaurant_menu != ""
@@ -81,7 +88,7 @@ const AddMenuScreen = ({ navigation, route }) => {
         const food_menu_array = Object.entries(menu).map((e) => ({
           [e[0]]: e[1],
         }));
-        food_id = foodRandom();
+        food_id = food_data ? food_data.id : foodRandom();
       }
 
       const menu_reshape = Object.assign(menu, {
@@ -99,7 +106,7 @@ const AddMenuScreen = ({ navigation, route }) => {
       const response = await updateDoc(RestaurantRef, {
         restaurant_menu: menu_reshape,
       });
-      uploadImage(Imageuri, food_id, restaurant_id);
+      !food_data && uploadImage(Imageuri, food_id, restaurant_id);
       setloading(false);
       setSuccessVisible(true);
 
@@ -122,10 +129,11 @@ const AddMenuScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       {!loading ? (
         <ScrollView contentContainerStyle={styles.form}>
-          <ImageUploader setImageuri={setImageuri} />
+          {!food_data && <ImageUploader setImageuri={setImageuri} />}
           <TextInput
             style={[styles["input-field"], { marginBottom: 10 }]}
             placeholder="enter food name..."
+            value={menu_data.food_name}
             onChangeText={(val) =>
               setmenu_data((curr) => {
                 return { ...curr, food_name: val };
@@ -135,6 +143,7 @@ const AddMenuScreen = ({ navigation, route }) => {
           <TextInput
             style={[styles["input-field"], { marginBottom: 10 }]}
             placeholder="enter food description..."
+            value={menu_data.food_description}
             onChangeText={(val) =>
               setmenu_data((curr) => {
                 return { ...curr, food_description: val };
@@ -144,6 +153,7 @@ const AddMenuScreen = ({ navigation, route }) => {
           <TextInput
             style={[styles["input-field"], { marginBottom: 10 }]}
             placeholder="enter Big portion price..."
+            value={food_price.Velika}
             onChangeText={(val) =>
               setfood_price((curr) => {
                 return { ...curr, Velika: val };
@@ -153,6 +163,7 @@ const AddMenuScreen = ({ navigation, route }) => {
           <TextInput
             style={[styles["input-field"], { marginBottom: 10 }]}
             placeholder="enter Middle portion price ..."
+            value={food_price.Srednja}
             onChangeText={(val) =>
               setfood_price((curr) => {
                 return { ...curr, Srednja: val };
@@ -162,6 +173,7 @@ const AddMenuScreen = ({ navigation, route }) => {
           <TextInput
             style={[styles["input-field"], { marginBottom: 10 }]}
             placeholder="enter Small portion price ..."
+            value={food_price.Mala}
             onChangeText={(val) =>
               setfood_price((curr) => {
                 return { ...curr, Mala: val };

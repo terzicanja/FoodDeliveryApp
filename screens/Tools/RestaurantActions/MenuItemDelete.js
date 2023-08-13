@@ -11,14 +11,22 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { getFirestore } from "@firebase/firestore";
 import config from "../../../config/config.json";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const MenuItemDelete = ({ item, restaurant_id, deleteById }) => {
+const MenuItemDelete = ({
+  item,
+  restaurant_id,
+  deleteById,
+  restaurant_data,
+}) => {
   let food_data = item;
   let prices = item?.food?.food_price;
   let food_id = item?.id;
 
   const currency = config.prices.price_currency;
+
+  const navigation = useNavigation();
 
   const db = getFirestore();
 
@@ -26,6 +34,7 @@ const MenuItemDelete = ({ item, restaurant_id, deleteById }) => {
   const [SelectedFood, setSelectedFood] = useState({ portion: "", price: 0 });
 
   const [imgURL, setimgURL] = useState("");
+
   const getImageFromStorage = async () => {
     try {
       const storage = getStorage();
@@ -57,6 +66,23 @@ const MenuItemDelete = ({ item, restaurant_id, deleteById }) => {
         >
           {item?.food?.food_name}
         </Text>
+
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("AddMenuScreen", {
+              restaurant_data: restaurant_data,
+              edit_item_id: food_id,
+              food_data: food_data,
+            })
+          }
+          style={{
+            position: "absolute",
+            right: 50,
+            transform: [{ scale: 1.5 }],
+          }}
+        >
+          <FontAwesomeIcon style={{ color: "#CA5A42" }} icon={faPencil} />
+        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleDeleteMenuItem}
